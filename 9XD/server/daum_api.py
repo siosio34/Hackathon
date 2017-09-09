@@ -1,5 +1,5 @@
 import requests
-
+import json
 
 def get_place_id_results(place_id):
     url = "http://place.map.daum.net/main/v/{}".format(place_id)
@@ -17,4 +17,10 @@ def get_place_id_results(place_id):
         "blogReview": {**data["blogReview"]},
         "status": "OK",
     }
+    result = replace_list_word(result)
     return result
+
+def replace_list_word(result_dict):
+    dump_dict = json.dumps(result_dict)
+    replace_dict = dump_dict.replace("list", "resultList")
+    return json.loads(replace_dict)
