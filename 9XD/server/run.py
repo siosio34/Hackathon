@@ -18,9 +18,13 @@ def post():
     message = data
     return jsonify(status="OK", message=message), 200
 
-@app.route("/get/daum/<int:place_id>", methods=["GET"])
-def get_daum(place_id):
+@app.route("/get/daum/<int:place_id>/", methods=["GET"])
+@app.route("/get/daum/<int:place_id>/<string:key>", methods=["GET"])
+def get_daum(place_id, key=None):
     results = get_place_id_results(place_id)
+    if key is not None:
+        results = results.get(key, results)
+
     return jsonify(results)
 
 @app.route("/get/naver/<string:keyword>", methods=["GET"])
