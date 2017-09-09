@@ -13,7 +13,8 @@ def get_place_id_results(place_id):
         return {"status": "photo is not contained"}
     result = {
         "basicInfo": {**data["basicInfo"]},
-        "photo": {**data["photo"],
-        "status": "OK"}
+        "photo": {**data["photo"]},
+        "blogReview": {**data["blogReview"]},
+        "status": "OK",
     }
     return result
