@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from naver_api import get_keyword_results
+from daum_api import get_place_id_results
 
 app = Flask(__name__)
 
@@ -10,21 +11,17 @@ def index():
 @app.route("/post", methods=["POST"])
 def post():
     data = request.json
-    
+
     if data is None:
         return jsonify(status="OK", message="data is null"), 200
 
     message = data
     return jsonify(status="OK", message=message), 200
 
-@app.route("/get/")
-@app.route("/get/<int:item_id>", methods=["GET"])
-def get(item_id=None):
-    if item_id is None:  # case: /get, /get/
-        return jsonify(message="default get json")
-    # case: /get/<item_id>
-    return jsonify(id=item_id, message="42")
-
+@app.route("/get/daum/<int:place_id>", methods=["GET"])
+def get_daum(place_id):
+    results = get_place_id_results(place_id)
+    return jsonify(results)
 
 @app.route("/get/naver/<string:keyword>", methods=["GET"])
 def get_naver(keyword):
