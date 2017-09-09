@@ -2,7 +2,11 @@ import requests
 from bs4 import BeautifulSoup
 
 url = "http://www.diningcode.com/list.php?query=카페"
-res = requests.get(url)
+proxy = {
+    "http": "http://218.50.2.102:8080",
+    "https": "https://116.41.203.36:3128"
+}
+res = requests.get(url, proxies=proxy)
 soup = BeautifulSoup(res.text, "html.parser")
 
 rank_10 = soup.select("#search_list > dc-restaurant")
